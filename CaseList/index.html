@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Список дел</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div id="case-list">
+    <div class="header">
+        <h1>{{ header || 'Добро пожаловать!' }}</h1>
+      <button v-if="editing" @click="doEdit(false)" class="btn btn-cancel">Отмена</button>
+      <button v-else @click="doEdit(true)" class="btn btn-primary">Редактирование</button>
+    </div>
+
+    <div v-if="editing" class = "add-case-form">
+    <input 
+        @keyup.enter="saveCase" 
+        type="text" v-model="newCase" placeholder = "Добавить дело">
+        <p class="counter">{{ letterCounter }}/50</p>
+    <label><input type="checkbox" v-model = "newCasePriority" value="low">Приоритет</label>
+    <button v-bind:disabled="newCase.length < 8" @click="saveCase" class="btn btn-primary">Сохранить дело</button>
+    </div>
+    
+    <p v-if="items.length === 0">Отлично! Вы выполнили все запланированные дела!</p>
+    <ul>
+        <li v-for = "item in reversedItems" 
+        @click="toggleCompleted(item)"
+        :key="item.id" 
+        :class = "{strikeout: item.completed, priority: item.highPriority}" 
+        class='static-class'
+    >{{ item.label }}</li>
+    </ul>
+  </div>
+
+  <script src="https://unpkg.com/vue@3"></script>
+  <script>
+    const caseListApp = Vue.createApp({
+      data() {
+        return {
+          header: 'Список дел',
+          editing: false,
+          newCase: '',
+          newCasePriority: 'low',
+          items: [
+            {id: 1, label: "Сделать уборку дома", completed: false, highPriority: false},
+            {id: 2, label: "Завершите разработку сайта", completed: false, highPriority: true},
+            {id: 3, label: "Завершить отчёт по разработке", completed: false, highPriority: true},
+          ]
+        }
+      },
+      computed:{
+        letterCounter(){
+          return this.newCase.length
+        },
+        reversedItems(){
+          return [...this.items].reverse()
+        }
+      },
+      methods:{
+        saveCase(){
+            this.items.push({id:this.items.length + 1, label: this.newCase, highPriority: this.newCasePriority})
+            this.newCase = ""
+            this.newCasePriority = ""
+        },
+        doEdit(editing){
+            this.editing = editing
+            this.newCase = ""
+            this.newCasePriority = ""
+        },
+        toggleCompleted(item){
+            item.completed = !item.completed
+        }
+      }
+    }).mount('#case-list')
+  </script>
+</body>
+</html>
