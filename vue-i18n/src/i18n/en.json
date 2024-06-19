@@ -1,0 +1,73 @@
+{
+    "switchLang": "en",
+
+    "mainpagecard":{
+        "title": "Welcome to FoodMark",
+        "subtitle": "your universal portal for ordering dishes from the best restaurants in the city!",
+        "text": "On our site you will find a wide selection of culinary delights from local eateries to fine dining restaurants. 'FoodMark' offers a convenient and fast way to enjoy your favorite dishes without leaving home.",
+        "btn": "Order now",
+        "subheader": "How it works:",
+        "subheader-title-1": "1. Select a restaurant from the list or search by cuisine, dish or area.",
+        "subheader-title-2": "2. Browse the menu and add the desired dishes to your cart.",
+        "subheader-title-3": "3. Place your order by indicating your delivery address and preferred time.",
+        "subheader-title-4": "4. Pay online through our secure payment system.",
+        "subheader-title-5": "5. Track the status of your order in real time.",
+
+        "subheader-2": "Our advantages:",
+        "subheader-2-title-1": "<strong>A wide range of:</strong> from pizza and sushi to dietary and vegetarian dishes.",
+        "subheader-2-title-2": "<strong>Flexibility:</strong> possibility of ordering now or pre-ordering.",
+        "subheader-2-title-3": "<strong>Bonus program:</strong> accumulate points and get discounts on your next orders.",
+        "subheader-2-title-4": "<strong>24/7 support:</strong> our operators are always ready to help you with your choice or placing an order."
+    },
+
+    "footer": {
+        "about": "About us",
+        "contacts": "Contacts"
+    },
+
+    "establishment": {
+        "title-1": "Establishment 1",
+        "title-2": "Establishment 2",
+        "title-3": "Establishment 3",
+        "title-4": "Establishment 4",
+        "title-5": "Establishment 5",
+        "title-6": "Establishment 6",
+        "title-7": "Establishment 7"
+    },
+
+    "productLack": "No products found",
+    "restPageTitle": "List of restaurants",
+
+    "description": {
+        "default-dish": "Very tasty dish",
+        "good": "A decent place",
+        "manti": "Traditional Asian hot meat dish. Steamed dough with meat filling is manti.",
+        "happySamurai": "Philadelphia (5 pcs.), California (5 pcs.), Bansai (5 pcs.), Lava (5 pcs.), Chicken Cream (10 pcs.)",
+        "fullSumo": "Philadelphia (5pcs.), California (5pcs.), Dragon (5pcs.), California Chicken (5pcs.), Yasai Maki (5pcs.), Valencia (5pcs.), Nebraska (5pcs.), Monaco (10pcs.)"
+    },
+
+    "dishes": {
+        "manti": "Manti",
+        "khachapuri": "Khachapuri",
+        "happySamurai": "Happy Samurai",
+        "fullSumo": "Full Sumo"
+    },
+
+    "menu-dialog": {
+        "btn-open": "Open description",
+        "btn-close": "Close",
+        "description": "Description of the dish"
+    },
+
+    "cart": {
+        "title": "Cart",
+        "btn-clean": "Empty trash",
+        "btn-order": "Checkout",
+        "product-1": "Product 1",
+        "product-2": "Product 2",
+        "dialog-title": "Confirmation",
+        "dialog-text": "Are you sure you want to place an order?",
+        "yes": "Yes",
+        "no": "No"
+    }
+}
