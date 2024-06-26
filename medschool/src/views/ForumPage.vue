@@ -2,11 +2,9 @@
   <v-main>
     <v-container fluid class="container-forum">
       <strong style="font-size: 18px;">Форум</strong>
-      <v-row align="center">
-        <v-spacer></v-spacer>
-
-        <!-- Поле поиска -->
-        <v-col cols="6" sm="4" md="2">
+      <v-container fluid class="controls-container">
+      <v-row align="center" class="justify-end">
+        <v-col cols="auto">
           <v-text-field
             v-model="searchQuery"
             clearable
@@ -15,19 +13,15 @@
             density="compact"
             variant="underlined"
             prepend-inner-icon="mdi-magnify"
-            style="max-width: 230px;"
+            style="max-width: 230px; width: 230px;"
           ></v-text-field>
         </v-col>
-
-        <!-- Кнопку сортировки -->
-         <v-col cols="6" sm="4" md="1">
-      <v-btn icon @click="toggleSortDirection" class="sort-btn">
-        <v-icon>{{ sortDirectionIcon }}</v-icon>
-      </v-btn>
+        <v-col cols="auto">
+          <v-btn icon @click="toggleSortDirection" class="sort-btn">
+            <v-icon>{{ sortDirectionIcon }}</v-icon>
+          </v-btn>
         </v-col>
-
-        <!-- Выпадающий список категорий -->
-        <v-col cols="6" sm="4" md="2">
+        <v-col cols="auto">
           <v-select
             v-model="selectedCategory"
             :items="categories"
@@ -35,10 +29,12 @@
             color="teal"
             density="compact"
             variant="underlined"
-            style="max-width: 230px;"
+            style="max-width: 230px; width: 230px;"
+            @change="filterByCategory"
           ></v-select>
         </v-col>
       </v-row>
+    </v-container>
       <div class="container-card">
 
         <!-- Карточки постов -->
@@ -490,7 +486,7 @@ export default {
         );
       }
 
-      if (this.selectedCategory) {
+      if (this.selectedCategory && this.selectedCategory !== 'Сброс категорий') {
         filteredPosts = filteredPosts.filter(post => post.category === this.selectedCategory);
       }
 
@@ -505,12 +501,10 @@ export default {
         } else {
           return text.slice(0, length) + '...';
         }
-      }
-  },
-  watch: {
-    selectedCategory(newCategory) {
-      if (newCategory === 'Сброс категорий') {
-        this.selectedCategory = null; 
+    },
+      filterByCategory() {
+      if (this.selectedCategory === 'Сброс категорий') {
+        this.selectedCategory = null;
       }
     }
   },
