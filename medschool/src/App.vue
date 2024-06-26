@@ -6,7 +6,7 @@
       </div>
 
       <div class="pa-0" style="flex-grow: 1; min-height: 0;">
-        <router-view />
+        <router-view/>
       </div>
     </v-row>
   </v-app>
@@ -18,7 +18,7 @@ export default {
   name: 'App',
   components: {
     Menu,
-  }
+  },
 };
 </script>
 

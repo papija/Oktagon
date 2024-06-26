@@ -49,7 +49,9 @@
       <v-card class="taskbook">
         <v-card-title class="card-title">Задачник</v-card-title>
         <v-card-content>
+          <router-link to="/tasks" class="link-style">
           <v-card-item class="items">Архив задач</v-card-item>
+          </router-link>
           <v-card-item class="items">Состояние системы</v-card-item>
           <v-card-item class="items">Рейтинг</v-card-item>
           <v-card-item class="items">Курсы</v-card-item>

@@ -1,14 +1,13 @@
+import { createApp } from 'vue'
 import { createStore } from 'vuex'
+import postModule from './postModule';
+import authenticateModule from './authenticateModule';
 
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+const store = createStore({
   modules: {
+    postModule,
+    authenticateModule,
   }
-})
+});
+
+export default store
