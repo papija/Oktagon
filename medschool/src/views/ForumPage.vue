@@ -1,42 +1,40 @@
 <template>
   <v-main>
     <v-container fluid class="container-forum">
-      <strong style="font-size: 18px;">Форум</strong>
-      <v-container fluid class="controls-container">
+  <v-row align="center" class="justify-between">
+    <v-col cols="auto">
+      <strong style="font-size: 20px;">Форум</strong>
+    </v-col>
+    <v-col class="text-right">
       <v-row align="center" class="justify-end">
-        <v-col cols="auto">
-          <v-text-field
-            v-model="searchQuery"
-            clearable
-            color="teal"
-            label="Поиск"
-            density="compact"
-            variant="underlined"
-            prepend-inner-icon="mdi-magnify"
-            style="max-width: 230px; width: 230px;"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="auto">
-          <v-btn icon @click="toggleSortDirection" class="sort-btn">
-            <v-icon>{{ sortDirectionIcon }}</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="auto">
-          <v-select
-            v-model="selectedCategory"
-            :items="categories"
-            label="Категории"
-            color="teal"
-            density="compact"
-            variant="underlined"
-            style="max-width: 230px; width: 230px;"
-            @change="filterByCategory"
-          ></v-select>
-        </v-col>
+        <v-text-field
+          v-model="searchQuery"
+          clearable
+          color="teal"
+          label="Поиск"
+          density="compact"
+          variant="underlined"
+          prepend-inner-icon="mdi-magnify"
+          style="max-width: 230px; width: 230px;"
+        ></v-text-field>
+        <v-btn icon @click="toggleSortDirection" class="sort-btn">
+          <v-icon>{{ sortDirectionIcon }}</v-icon>
+        </v-btn>
+        <v-select
+          v-model="selectedCategory"
+          :items="categories"
+          label="Категории"
+          color="teal"
+          density="compact"
+          variant="underlined"
+          style="max-width: 230px; width: 230px;"
+          @change="filterByCategory"
+        ></v-select>
       </v-row>
-    </v-container>
-      <div class="container-card">
+    </v-col>
+  </v-row>
 
+      <div class="container-card">
         <!-- Карточки постов -->
         <v-row>
           <v-col
@@ -56,7 +54,6 @@
               <v-card-subtitle>{{ post.author }}</v-card-subtitle>
               <v-card-text>{{ truncateText(post.content, 150) }}</v-card-text>
               <v-card-actions>
-                <!-- Кнопка для перехода на подробный просмотр -->
                 <v-btn
                   text
                   style="color: #B0D9CB; font-size: 10px; text-decoration: underline;"
@@ -504,7 +501,7 @@ export default {
     },
       filterByCategory() {
       if (this.selectedCategory === 'Сброс категорий') {
-        this.selectedCategory = null;
+        this.selectedCategory = null; 
       }
     }
   },
@@ -516,7 +513,7 @@ export default {
 
 <style scoped>
 .container-forum{
-  margin-top: 20px;
+  margin-top: 15px;
   max-width: 1500px;
 }
 
@@ -527,7 +524,8 @@ export default {
 
 .container-card {
   width: 1480px;
-  max-height: 85ch; 
+  max-height: 90ch; 
+  margin-top: 15px;
   overflow-y: auto; 
   overflow-x: hidden;
 }
@@ -537,30 +535,33 @@ export default {
 }
 
 .sort-btn{
-  transition: none; /* Убирает анимацию при наведении */
-  box-shadow: none; /* Убирает тень кнопки */
-  border: none; /* Убирает границу кнопки */
-  outline: none; /* Убирает обводку при фокусировке */
+  transition: none;
+  box-shadow: none;
+  border: none; 
+  outline: none; 
+}
+.v-row{
+  flex-wrap: wrap;
 }
 
-/*Изменение стиля scrollbar*/
 ::-webkit-scrollbar {
-  width: 6px; /* ширина полосы прокрутки */
-  border-radius: 10px; /* закругление углов полосы прокрутки */
+  width: 6px;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* цвет дорожки полосы прокрутки */
-  border-radius: 10px; /* закругление углов полосы прокрутки */
+  background: #f1f1f1;
+  border-radius: 10px; 
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4BA285; /* цвет полосы прокрутки */
-  border-radius: 10px; /* закругление углов полосы прокрутки */
+  background: #4BA285;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #36715D; /* темный оттенок цвета полосы прокрутки при наведении */
-  border-radius: 10px; /* закругление углов полосы прокрутки */
+  background: #36715D;
+  border-radius: 10px;
 }
 </style>
+

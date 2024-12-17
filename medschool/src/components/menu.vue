@@ -1,36 +1,37 @@
 <template>
   <v-row>
-    <!-- Колонка меню -->
     <v-col cols="12" md="3" class="menu">
-      <!-- Логотип -->
       <v-card class="logo d-flex justify-center align-center">
-        <v-icon color="white" style="margin-right: 30px;">mdi-medical-bag</v-icon>
+        <v-icon color="white" style="margin-right: 10px;">
+          <v-img src="@/assets/logo.svg" alt="Логотип" contain></v-img>
+        </v-icon>
         <strong style="color: white; font-size: 18px;">Medical School</strong>
       </v-card>
 
-      <!-- Профиль -->
       <v-card class="profile">
         <v-card-title class="card-title">Профиль</v-card-title>
-        <v-card-item>
-          <v-card-content class="content">
-            <v-avatar class="avatar" size="35">
-              <v-img src="../assets/avatar.png"></v-img>
-            </v-avatar>
-            <span class="profile-text">Фамилия Имя Отчество</span>
-            <v-card-item>
-              <v-icon size="25">
-                <v-img src='../assets/lvl.png'></v-img>
-              </v-icon>
-              <span class="profile-text">Ур. 1</span>
-            </v-card-item>
-          </v-card-content>
+        <v-card-item v-if="!isAuthenticated">
+          <v-card-action>
+            <v-btn class="edit-btn" @click="goToLogin">Авторизоваться</v-btn>
+          </v-card-action>
         </v-card-item>
-        <v-card-action>
-          <v-btn class="edit-btn">Редактировать</v-btn>
+        <v-card-content v-else class="content">
+          <v-avatar class="avatar" size="35">
+            <v-img :src="user.avatar || '../assets/avatar.png'"></v-img>
+          </v-avatar>
+          <span class="profile-text">{{ user.firstName }} {{ user.lastName }} {{ user.middleName }}</span>
+          <v-card-item>
+            <v-icon size="25">
+              <v-img src='../assets/lvl.png'></v-img>
+            </v-icon>
+            <span class="profile-text">Ур. {{ user.accountLevel }}</span>
+          </v-card-item>
+        </v-card-content>
+        <v-card-action v-if="isAuthenticated">
+          <v-btn class="edit-btn" @click="editProfile">Редактировать</v-btn>
         </v-card-action>
       </v-card>
 
-      <!-- Информация -->
       <v-card class="info">
         <v-card-title class="card-title">Информация</v-card-title>
         <v-card-content>
@@ -45,20 +46,20 @@
         </v-card-content>
       </v-card>
 
-      <!-- Задачник -->
       <v-card class="taskbook">
         <v-card-title class="card-title">Задачник</v-card-title>
         <v-card-content>
           <router-link to="/tasks" class="link-style">
-          <v-card-item class="items">Архив задач</v-card-item>
+            <v-card-item class="items">Архив задач</v-card-item>
           </router-link>
-          <v-card-item class="items">Состояние системы</v-card-item>
+          <router-link to="/cond" class="link-style">
+            <v-card-item class="items">Состояние системы</v-card-item>
+          </router-link>
           <v-card-item class="items">Рейтинг</v-card-item>
           <v-card-item class="items">Курсы</v-card-item>
         </v-card-content>
       </v-card>
 
-      <!-- Методичка -->
       <v-card class="methodical">
         <v-card-title class="card-title">Методичка</v-card-title>
         <v-card-content>
@@ -73,168 +74,105 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
-  name: 'App',
-  data: () => ({
-    
-  }),
+  name: 'Profile',
+  computed: {
+    ...mapGetters('authenticateModule', ['isAuthenticated', 'user'])
+  },
+  methods: {
+    goToLogin() {
+      this.$router.push({ name: 'Authentication' });
+    },
+    editProfile() {
+      this.$router.push({ name: 'EditProfile' });
+    }
+  }
 }
 </script>
 
 <style scoped>
 .menu {
-  padding-top: 30px; /* Отступ сверху */
-  padding-left: 30px; /* Отступ слева */
+  padding-top: 30px;
+  padding-left: 30px;
 }
 
-@media (max-width: 1800px) {
-    .v-container {
-        display: none;
-    }
-}
-
-@media (min-width: 2000px) {
-    .v-container {
-        display: none;
-    }
-}
 .logo {
   width: 300px;
   height: 72px;
   background: #4BA285;
   border-radius: 10px;
   margin-bottom: 10px;
-  flex: none;
-  order: 3;
-  flex-grow: 0;
 }
 
-.profile {
+.profile, .info, .taskbook, .methodical {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   color: white;
   padding: 20px;
   margin-bottom: 10px;
-  gap: 10px;
   width: 300px;
-  height: 166px;
+  gap: 10px;
   background: #4BA285;
   border-radius: 10px;
-  flex: none;
-  order: 3;
-  flex-grow: 0;
 }
 
-.info {
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-color: white;
-padding: 20px;
-margin-bottom: 10px;
-gap: 10px;
-width: 300px;
-height: 230px;
-background: #4BA285;
-border-radius: 10px;
-flex: none;
-order: 3;
-flex-grow: 0;
-}
-
-.taskbook{
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-color: white;
-padding: 20px;
-margin-bottom: 10px;
-gap: 10px;
-width: 300px;
-height: 220px;
-background: #4BA285;
-border-radius: 10px;
-flex: none;
-order: 3;
-flex-grow: 0;
-}
-
-.methodical{
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-color: white;
-padding: 20px;
-gap: 10px;
-width: 300px;
-height: 200px;
-background: #4BA285;
-border-radius: 10px;
-flex: none;
-order: 4;
-flex-grow: 0;
+.info{
+ height: 260px;
 }
 
 .content {
-display: flex;
-flex-direction: row;
-align-items: left;
-padding: 0px;
-width: 240px;
-height: 37px;
-flex: none;
-order: 1;
-flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .edit-btn {
-display: flex;
-flex-direction: row;
-width: 260px;
-height: 30px;
-background: #6EBB91;
-box-shadow: 0px 0px 20px rgba(110, 187, 145, 0.5);
-border-radius: 5px;
-flex: none;
-order: 2;
-flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  width: 260px;
+  height: 30px;
+  background: #6EBB91;
+  box-shadow: 0 0 20px rgba(110, 187, 145, 0.5);
+  border-radius: 5px;
+  margin-top: 5px;
+  align-items: center;
 }
 
-.profile-text{
-    font-size: 13px;
+.profile-text {
+  font-size: 13px;
+  margin-left: 6px;
 }
 
-.avatar{
-    margin-right: 6px;
+.avatar {
+  margin-right: 6px;
 }
 
-.card-title{
-   display: flex;
-   justify-content: center;
-   width: 100%;
-   font-size: 16px;
-   margin: 0;
-   padding: 0;
-   gap: 0;
+.card-title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
 }
 
-.items{
-    font-size: 15px;
-    padding: 4px;
+.items {
+  font-size: 15px;
+  padding: 3px;
 }
 
-.router-link-exact-active, .router-link-active {
-  color: #FF0000 !important; /* Цвет активной ссылки */
-}
-
-.link-style, .router-link {
+.link-style {
   text-decoration: none;
-  color: #FFFFFF; /* Белый цвет текста для неактивных ссылок */
+  color: #FFFFFF;
 }
 
-.router-link:hover {
-  color: #FFFF00 !important; /* Цвет при наведении */
+.link-style:hover {
+  color: #FFFF00 !important;
 }
 </style>

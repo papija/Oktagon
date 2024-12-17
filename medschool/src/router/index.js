@@ -3,6 +3,10 @@ import MainPage from '../views/MainPage.vue'
 import ForumPage from '../views/ForumPage.vue'
 import ForumSubjectPage from '../views/ForumSubjectPage.vue'
 import TasksPage from '@/views/TasksPage.vue'
+import ConditionTaskPage from '@/views/ConditionTaskPage.vue'
+import AuthPage from '@/views/AuthPage.vue'
+import EditProfilePage from '@/views/EditProfilePage.vue'
+import TaskDetailPage from '@/views/TaskDetailPage.vue'
 
 const routes = [
   {
@@ -25,6 +29,26 @@ const routes = [
     path: '/tasks',
     name: 'Tasks',
     component: TasksPage,
+  },
+  {
+    path: '/cond',
+    name: 'Conditions',
+    component: ConditionTaskPage,
+  },
+  {
+    path: '/auth',
+    name: 'Authentication',
+    component: AuthPage,
+  },
+  {
+    path: '/edit',
+    name: 'EditProfile',
+    component: EditProfilePage,
+  },
+  {
+    path: '/tasks/detail/:id',
+    name: 'TaskDetail',
+    component: TaskDetailPage,
   },
 ]
 

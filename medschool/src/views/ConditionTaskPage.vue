@@ -3,9 +3,11 @@
     <v-container fluid class="container-title">
       <v-row align="center" justify="space-between">
         <v-col>
-          <strong style="font-size: 18px;">Архив задач</strong>
+          <strong style="font-size: 18px;">Состояние системы</strong>
           <v-divider :thickness="4" class="border-opacity-100" color="#4BA285"></v-divider>
-          По своей сути рыбакет является альтернативой традиционному lorem ipsum, который вызывает у некоторых людей недоумение при попытках прочитать рыбу текстВ отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет неповторимым смыслом и придаст неповторимый колорит советских времен.
+          <p>
+            По своей сути рыбакет является альтернативой традиционному lorem ipsum, который вызывает у некоторых людей недоумение при попытках прочитать рыбу текст. В отличии от lorem ipsum, текст рыба на русском языке наполнит любой макет неповторимым смыслом и придаст неповторимый колорит советских времен.
+          </p>
         </v-col>
         <v-col cols="auto" class="controls-container">
           <v-row align="center" class="justify-end">
@@ -42,32 +44,27 @@
         </v-col>
       </v-row>
     </v-container>
-
+    
     <v-container fluid class="table-container">
       <div class="table-wrapper">
         <table>
           <thead>
             <tr>
-              <th @click="sortBy('resolved')">Решено</th>
-              <th @click="sortBy('id')">ID</th>
-              <th @click="sortBy('title')">Название задачи</th>
-              <th @click="sortBy('theme')">Тема</th>
-              <th @click="sortBy('analysis')">Разбор</th>
-              <th @click="sortBy('difficulty')">Сложность</th>
-              <th @click="sortBy('solvable')">Решаемость</th>
-              <th @click="sortBy('accepted')">Принято</th>
+              <th @click="sortBy('date')">Дата</th>
+              <th @click="sortBy('taskId')">ID Задачи</th>
+              <th @click="sortBy('authorName')">Автор решения</th>
+              <th @click="sortBy('isCorrect')">Статус ответа</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="task in filteredTasks" :key="task.id" @click="$router.push({ name: 'TaskDetail', params: { id: task.id } })" style="cursor: pointer;">
-              <td>{{ task.resolved }}</td>
-              <td>{{ task.id }}</td>
-              <td>{{ task.title }}</td>
-              <td>{{ task.theme }}</td>
-              <td>{{ task.analysis }}</td>
-              <td>{{ task.difficulty }}</td>
-              <td>{{ task.solvable }}</td>
-              <td>{{ task.accepted }}</td>
+            <tr v-if="filteredAnswers.length === 0">
+              <td colspan="4">Нет данных для отображения.</td>
+            </tr>
+            <tr v-for="answer in filteredAnswers" :key="answer.taskId">
+              <td>{{ answer.date }}</td>
+              <td>{{ answer.taskId }}</td>
+              <td>{{ answer.authorName }}</td>
+              <td>{{ answer.isCorrect ? 'Принято' : 'Неверный ответ' }}</td>
             </tr>
           </tbody>
         </table>
@@ -77,41 +74,43 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   data() {
     return {
       searchQuery: '',
       selectedCategory: null,
-      sortKey: 'title',
+      sortKey: 'date',
       sortDirection: 'asc',
     };
   },
   computed: {
-    ...mapGetters(['allTasks']),
+    answers() {
+      return this.$store.getters.getUserAnswers;
+    },
     categories() {
-      const themes = this.allTasks.map(task => task.theme);
+      const themes = this.answers.map(answer => answer.theme);
       return ['Сброс Темы', ...new Set(themes)];
     },
-    filteredTasks() {
-      let tasks = this.allTasks;
+    filteredAnswers() {
+  let answers = this.answers || [];
 
-      if (this.searchQuery) {
-        tasks = tasks.filter(task => task.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
-      }
+  // Фильтрация по запросу поиска
+  if (this.searchQuery) {
+    answers = answers.filter(answer => answer.authorName.toLowerCase().includes(this.searchQuery.toLowerCase()));
+  }
 
-      if (this.selectedCategory && this.selectedCategory !== 'Сброс Темы') {
-        tasks = tasks.filter(task => task.theme === this.selectedCategory);
-      }
+  // Фильтрация по выбранной категории
+  if (this.selectedCategory && this.selectedCategory !== 'Сброс Темы') {
+    answers = answers.filter(answer => answer.theme === this.selectedCategory);
+  }
 
-      return tasks.slice().sort((a, b) => {
-        const modifier = this.sortDirection === 'asc' ? 1 : -1;
-        if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier;
-        if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier;
-        return 0;
-      });
-    },
+  return answers.slice().sort((a, b) => {
+    const modifier = this.sortDirection === 'asc' ? 1 : -1;
+    if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier;
+    if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier;
+    return 0;
+  });
+},
     sortDirectionIcon() {
       return this.sortDirection === 'asc' ? 'mdi-sort-ascending' : 'mdi-sort-descending';
     }
@@ -133,7 +132,7 @@ export default {
         this.selectedCategory = null;
       }
     }
-  },
+  }
 };
 </script>
 
@@ -155,7 +154,6 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
 
 .table-container {
   max-width: 1500px;
@@ -188,20 +186,16 @@ tr:hover {
   background-color: #EDF5F1;
 }
 
-tr.highlighted {
-  background-color: #c8e6c9;
-}
-
-.sort-btn{
+.sort-btn {
   transition: none;
   box-shadow: none;
-  border: none; 
+  border: none;
   outline: none;
 }
 
-/*Изменение стиля scrollbar*/
+
 ::-webkit-scrollbar {
-  width: 6px; 
+  width: 6px;
   border-radius: 10px;
 }
 

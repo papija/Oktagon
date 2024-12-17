@@ -1,0 +1,70 @@
+/* Общие стили для редактора */
+.ql-container {
+  border: none ; /* Убираем бордер */
+  box-shadow: none;  /* Убираем тени */
+}
+
+/* Стили для редактора */
+.ql-editor {
+  min-height: 150px;
+  padding: 10px;
+  background-color: #ffffff;  /* Белый фон */
+  color: #000000;  /* Черный текст */
+  font-family: 'Roboto', sans-serif;  /* Шрифт */
+  font-size: 14px;  /* Размер шрифта */
+  line-height: 1.5;  /* Межстрочный интервал */
+  border: none;  /* Убираем бордер */
+  box-shadow: none;  /* Убираем тени */
+}
+
+/* Стили для тулбара */
+.ql-toolbar {
+  background-color: none;  /* Светлый фон тулбара */
+  border: none !important;  /* Убираем бордер */
+  box-shadow: none;  /* Убираем тени */
+  padding: 5px;  /* Уменьшаем отступы */
+}
+
+/* Стили для кнопок тулбара */
+.ql-toolbar button {
+  background: none;
+  border: none;
+  color: #000000;
+  padding: 8px;
+  margin: 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Стили для активных кнопок */
+.ql-toolbar .ql-active {
+  background-color: #d9d9d9;  /* Цвет для активной кнопки */
+}
+
+/* Стили для ссылок */
+.ql-toolbar .ql-link {
+  color: #1e88e5;  /* Цвет ссылки */
+}
+
+/* Стили для выбранного элемента в тулбаре */
+.ql-toolbar .ql-picker.ql-expanded .ql-picker-options {
+  display: block;
+  background-color: #f4f4f4;
+  border: none;
+  box-shadow: none;
+}
+
+/* Убираем бордеры у иконок */
+.ql-toolbar .ql-formats {
+  border: none;
+  box-shadow: none;
+}
+
+.ql-toolbar .ql-separator {
+  border-left: 1px solid #ccc !important; /* Создаем вертикальную линию */
+  height: 20px !important; /* Высота разделителя */
+  margin: 0 !important; /* Убираем все отступы */
+  padding: 0 !important; /* Убираем padding, если он установлен */
+  width: 0 !important; /* Убираем ширину разделителя, чтобы он был только как линия */
+  cursor: none;
+}
